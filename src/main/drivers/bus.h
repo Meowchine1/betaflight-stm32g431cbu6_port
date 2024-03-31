@@ -26,6 +26,8 @@
 #include "drivers/io_types.h"
 #include "drivers/dma.h"
 
+#include "stm32g431xx.h" // <!>
+
 typedef enum {
     BUS_TYPE_NONE = 0,
     BUS_TYPE_I2C,

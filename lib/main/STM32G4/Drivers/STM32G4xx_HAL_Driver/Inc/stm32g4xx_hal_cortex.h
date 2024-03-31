@@ -17,6 +17,8 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
+#include "stm32g431xx.h"
+
 #ifndef __STM32G4xx_HAL_CORTEX_H
 #define __STM32G4xx_HAL_CORTEX_H
 

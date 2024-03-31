@@ -19,7 +19,7 @@
  */
 
 #pragma once
-
+#include "stm32g431xx.h" // <!>
 #include "drivers/resource.h"
 
 #if defined(USE_ATBSP_DRIVER)
@@ -51,6 +51,10 @@ typedef struct dmaResource_s dmaResource_t;
 
 struct dmaChannelDescriptor_s;
 typedef void (*dmaCallbackHandlerFuncPtr)(struct dmaChannelDescriptor_s *channelDescriptor);
+
+#if !defined (STM32G4)
+#define STM32G4
+#endif /* STM32G4 */
 
 typedef struct dmaChannelDescriptor_s {
     DMA_TypeDef*                dma;

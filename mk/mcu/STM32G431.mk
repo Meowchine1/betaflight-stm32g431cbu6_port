@@ -117,30 +117,21 @@ INCLUDE_DIRS    := $(INCLUDE_DIRS) \
 #Flags
 ARCH_FLAGS      = -mthumb -mcpu=cortex-m4 -march=armv7e-m -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant
 
-DEVICE_FLAGS    = -DUSE_HAL_DRIVER -DUSE_FULL_LL_DRIVER -DUSE_DMA_RAM -DMAX_MPU_REGIONS=16
+DEVICE_FLAGS    = -DUSE_HAL_DRIVER -DUSE_FULL_LL_DRIVER -DUSE_DMA_RAM  -DMAX_MPU_REGIONS=8 #-DMAX_MPU_REGIONS=16 <!>
 
 # G47X_TARGETS includes G47{3,4}{RE,CE,CEU}
 
-ifeq ($(TARGET_MCU),STM32G474xx)
-DEVICE_FLAGS   += -DSTM32G474xx
-LD_SCRIPT       = $(LINKER_DIR)/stm32_flash_g474.ld
-STARTUP_SRC     = startup_stm32g474xx.s
-MCU_FLASH_SIZE  = 512
+ifeq ($(TARGET_MCU),STM32G431xx)  # <!>
+DEVICE_FLAGS   += -DSTM32G431   #-DSTM32G474xx  <!>
+LD_SCRIPT       = $(LINKER_DIR)/STM32G431CBUX_FLASH.ld # <!>
+STARTUP_SRC     = $(ROOT)/lib/main/STM32G4/Drivers/CMSIS/Device/ST/STM32G4xx/Source/Templates/arm/startup_stm32g431xx.s# <!>
+MCU_FLASH_SIZE  = 128  #<!>
 # Override the OPTIMISE_SPEED compiler setting to save flash space on these 512KB targets.
 # Performance is only slightly affected but around 50 kB of flash are saved.
 OPTIMISE_SPEED = -O2
-else ifeq ($(TARGET_MCU),STM32G431xx)  # <!>
-    DEVICE_FLAGS   += -DSTM32G431   #-DSTM32G474xx  <!>
-    LD_SCRIPT       = $(LINKER_DIR)/STM32G431CBUX_FLASH.ld # <!>
-    STARTUP_SRC     = startup_stm32g431xx.S  # <!>
-    MCU_FLASH_SIZE  = 128  #<!>
-    # Override the OPTIMISE_SPEED compiler setting to save flash space on these 512KB targets.
-    # Performance is only slightly affected but around 50 kB of flash are saved.
-    OPTIMISE_SPEED = -O2
 else
-    $(error Unknown MCU for G4 target $(TARGET_MCU))
+$(error Unknown MCU for G4 target $(TARGET_MCU))
 endif
-
 DEVICE_FLAGS    += -DHSE_VALUE=$(HSE_VALUE) -DSTM32
 
 VCP_SRC = \

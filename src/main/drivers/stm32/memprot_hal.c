@@ -24,11 +24,13 @@
 
 #include "drivers/memprot.h"
 
+#include "stm32g4xx_hal_cortex.h"
+
 static void memProtConfigError(void)
 {
     for (;;) {}
 }
-
+unsigned int MAX_MPU_REGIONS = 8; 
 void memProtConfigure(mpuRegion_t *regions, unsigned regionCount)
 {
     MPU_Region_InitTypeDef MPU_InitStruct;

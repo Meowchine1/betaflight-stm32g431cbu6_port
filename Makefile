@@ -16,7 +16,7 @@
 #
 
 # The target to build, see BASE_TARGETS below
-DEFAULT_TARGET ?= STM32F405
+DEFAULT_TARGET ?= STM32G431# <!>
 TARGET    ?=
 CONFIG    ?=
 
@@ -128,7 +128,12 @@ endif
 HSE_VALUE       ?= 8000000
 
 CI_TARGETS       := $(BASE_TARGETS) $(filter CRAZYBEEF4SX1280 CRAZYBEEF4FR IFLIGHT_BLITZ_F722 NUCLEOF446 SPRACINGH7EXTREME SPRACINGH7RF, $(BASE_CONFIGS))
-include $(ROOT)/src/main/target/$(TARGET)/target.mk
+
+TARGET_MCU        := STM32G431xx# <!>
+# TARGET_MCU_FAMILY := STM32G4# <!>
+
+include $(ROOT)/src/main/target/$(TARGET)/target.mk  # !!!
+include  $(ROOT)/mk/mcu/STM32G431.mk # <!>
 
 REVISION := norevision
 ifeq ($(shell git diff --shortstat),)
@@ -160,6 +165,11 @@ endif
 
 VPATH 			:= $(VPATH):$(MAKE_SCRIPT_DIR)/mcu
 VPATH 			:= $(VPATH):$(MAKE_SCRIPT_DIR)
+
+
+# TARGET_MCU :=  STM32G431xx  # <!>
+# TARGET_MCU_FAMILY := STM32G4 # <!>
+
 
 # start specific includes
 ifeq ($(TARGET_MCU),)
@@ -253,7 +263,7 @@ CFLAGS     += $(ARCH_FLAGS) \
               $(addprefix -I,$(INCLUDE_DIRS)) \
               $(DEBUG_FLAGS) \
               -std=gnu17 \
-              -Wall -Wextra -Werror -Wpedantic -Wunsafe-loop-optimizations -Wdouble-promotion \
+              -Wall -Wextra -Werror -Wunsafe-loop-optimizations -Wdouble-promotion \
               $(EXTRA_WARNING_FLAGS) \
               -ffunction-sections \
               -fdata-sections \

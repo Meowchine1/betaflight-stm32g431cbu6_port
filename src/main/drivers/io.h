@@ -29,12 +29,16 @@
 
 #include "drivers/io_types.h"
 
+#include "stm32g431xx.h" // <!>
+
 // preprocessor is used to convert pinid to requested C data value
 // compile-time error is generated if requested pin is not available (not set in TARGET_IO_PORTx)
 // ioTag_t and IO_t is supported, but ioTag_t is preferred
 
 // expand pinid to to ioTag_t
 #define IO_TAG(pinid) DEFIO_TAG(pinid)
+
+#define STM32G4  // <!>
 
 #if defined(STM32F7) || defined(STM32H7) || defined(STM32G4)
 
@@ -100,7 +104,7 @@
 #define IOCFG_IN_FLOATING    0
 
 #else
-# warning "Unknown TARGET"
+#warning "Unknown TARGET"
 #endif
 
 #if defined(STM32F7) || defined(STM32H7) || defined(STM32G4) || defined(AT32F4)
